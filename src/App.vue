@@ -66,7 +66,7 @@
                   <q-input filled type="number" v-model="hours" label="Digite las horas que trabajo a la semana"></q-input>
                   <div class="q-mb-sm">
                     <br />
-                    <q-btn  label="guardar" class="text-white bg-blue-10" @click="postTypePackaing()" />
+                    <q-btn  label="guardar" class="text-white bg-blue-10" @click="rol()" />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -109,8 +109,11 @@ let columns = ref([
 let rows = ref([])
 
 function rol() {
-  if (category.value=== "1") {
+  if (hours.value >40) {
     let totalHours =hours.value-40
+    console.log(totalHours);
+    
+
     
   }
 }
