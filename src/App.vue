@@ -83,12 +83,16 @@
 
 
 <script setup>
+import extras from '@quasar/extras';
 import {ref} from 'vue'
 
 let prompt = ref(false)
 let name = ref("")
 let hours= ref()
+let extrasH= ref()
+let totalHours= ref()
 let category = ref()
+let hoursN= ref()
 let options =ref([
     {label:"1", value:12000},
     {label:"2", value:17000},
@@ -99,7 +103,7 @@ let options =ref([
 let columns = ref([
   {name: 'name',label: 'NOMBRE',field: 'name',align: 'center'},
   {name: 'category', label: 'CATEGORIA', field: 'category',align: 'center',},
-  {name: 'hours', label: 'HORAS', field: 'hours',align: 'center',  },
+  {name: 'hours', label: 'HORAS', field: 'hours',align: 'center', type: 'number' },
   {name: 'extras', label: 'TOTAL DE EXTRAS', field: 'extras',align: 'center',},
   {name: 'total',  label: 'TOTAL', field: 'total',align: 'center'},
 
@@ -110,14 +114,41 @@ let rows = ref([])
 
 function rol() {
   if (hours.value >40) {
-    let totalHours =hours.value-40
+    totalHours =parseInt(hours.value-40)
     console.log(totalHours);
-    
+    console.log(hours.value);
+    extrasH.value= (category.value.value*0.25)*totalHours
+    hoursN.value= (40*category.value.value)+extrasH.value
 
     
-  }
+    console.log(extrasH.value);
+console.log(hoursN.value);
+    }
+    else{
+      hoursN.value= hours.value*category.value.value
+      extrasH=""
+    }
+    addRows()
+    cleanF()
 }
 
+function addRows(){
+  let add={
+  name: name.value,
+  category: category.value.label,
+  hours: hours.value,
+  extras: extrasH.value,
+  total: hoursN.value,
+}
+rows.value.push(add)
+}
+
+function cleanF(){
+  name.value= ""
+  category.value= ""
+  hours.value= ""
+
+}
 
 </script>
 
