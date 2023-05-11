@@ -46,7 +46,8 @@
       <div class="row q-mt-md">
         <div class="col-2"></div>
         <div class="col-8 ">
-          <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index" virtual-scroll />
+          <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index" virtual-scroll v-model:pagination="pagination"
+      :rows-per-page-options="[0]"/>
         </div>
         <div class="col-2"></div>
       </div>
@@ -113,6 +114,9 @@ let options = ref([
   { label: "3", value: 22000 }
 
 ])
+let pagination= ref({
+        rowsPerPage: 0
+      })
 
 let columns = ref([
   { name: 'name', label: 'NOMBRE', field: 'name', align: 'center' },
@@ -132,14 +136,13 @@ function rol() {
     totalHours.value = hours.value - 40 //B
     extrasH.value = ((category.value.value * 0.25)) * totalHours.value 
     total.value= extrasH.value+category.value.value
-    console.log(total.value);
     hoursN.value = (40 * category.value.value) + total.value
   }
-  else {
+  else { //horas menores a 40 
     hoursN.value = hours.value * category.value.value //C
     total.value = "" 
-  } //D
-  addRows() 
+  } 
+  addRows()//D
   cleanF()
 }
 
