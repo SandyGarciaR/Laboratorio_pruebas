@@ -36,7 +36,7 @@
       <div class="row q-my-lg">
         <div class="col-2"></div>
         <div class="col-8">
-          <q-btn class="bg-blue-10 text-white" @click="prompt, prompt = true" id="butonAdd">Crear <q-icon
+          <q-btn class="bg-blue-10 text-white" @click="modal, modal = true" id="butonAdd">Crear <q-icon
               name="add"></q-icon> </q-btn>
         </div>
         <div class="col-2"></div>
@@ -51,7 +51,7 @@
         <div class="col-2"></div>
       </div>
 
-      <q-dialog v-model="prompt">
+      <q-dialog v-model="modal">
         <q-card>
           <q-card-section class="bg-blue-10">
             <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
@@ -97,7 +97,7 @@
 <script setup>
 import { ref } from 'vue'
 
-let prompt = ref(false)
+let modal = ref(false)
 let alert = ref()
 let mostrarAlert = ref(false)
 let name = ref("")
@@ -106,6 +106,7 @@ let extrasH = ref()
 let totalHours = ref()
 let category = ref()
 let hoursN = ref()
+let total=ref()
 let options = ref([
   { label: "1", value: 12000 },
   { label: "2", value: 17000 },
@@ -129,8 +130,10 @@ let rows = ref([])
 function rol() {
   if (hours.value > 40) { //A
     totalHours.value = hours.value - 40 //B
-    extrasH.value = (category.value.value * 0.25) * totalHours.value 
-    hoursN.value = (40 * category.value.value) + extrasH.value 
+    extrasH.value = ((category.value.value * 0.25)) * totalHours.value 
+    total.value= extrasH.value+category.value.value
+    console.log(total.value);
+    hoursN.value = (40 * category.value.value) + total.value
   }
   else {
     hoursN.value = hours.value * category.value.value //C
@@ -146,7 +149,7 @@ function addRows() {
     category: category.value.label,
     hours: hours.value,
     hoursExtras: totalHours.value,
-    extras: extrasH.value,
+    extras: total.value,
     total: hoursN.value,
   } //C
   rows.value.push(add) //D
