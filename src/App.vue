@@ -137,7 +137,7 @@ function rol() {
   }
   else {
     hoursN.value = hours.value * category.value.value //C
-    extrasH.value = "" 
+    total.value = "" 
   } //D
   addRows() 
   cleanF()
